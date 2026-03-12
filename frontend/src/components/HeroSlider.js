@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaCrown } from 'react-icons/fa';
 import API from '../utils/api';
 import { getSliderImage } from '../utils/imageHelper';
 
@@ -9,31 +9,30 @@ const HeroSlider = () => {
   const [slides, setSlides] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Default slides as fallback
   const defaultSlides = [
     {
       _id: '1',
-      title: 'Exquisite Silk Sarees',
-      subtitle: 'Embrace Timeless Elegance',
-      description: 'Discover our premium collection of handwoven silk sarees',
+      title: 'Crafted for You',
+      subtitle: 'New Season Collection',
+      description: 'Discover handcrafted dresses designed to make you shine on every occasion',
       image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=1200',
       cta: 'Shop Now',
-      link: '/products?category=silk'
+      link: '/products'
     },
     {
       _id: '2',
-      title: 'New Arrival Collection',
-      subtitle: 'Fresh Designs for You',
-      description: 'Explore the latest trends in traditional wear',
+      title: 'Custom Boutique Designs',
+      subtitle: 'Exclusively Yours',
+      description: 'From casual chic to bridal couture — every stitch made with love',
       image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e5?w=1200',
       cta: 'Explore Collection',
       link: '/products?featured=true'
     },
     {
       _id: '3',
-      title: 'Festive Special',
+      title: 'Festive Specials',
       subtitle: 'Celebrate in Style',
-      description: 'Get up to 40% off on selected sarees',
+      description: 'Premium fabrics, elegant cuts — get up to 40% off on selected styles',
       image: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200',
       cta: 'Shop Sale',
       link: '/products?sale=true'
@@ -43,13 +42,8 @@ const HeroSlider = () => {
   const fetchSliders = useCallback(async () => {
     try {
       const { data } = await API.get('/sliders/active');
-      if (data.sliders && data.sliders.length > 0) {
-        setSlides(data.sliders);
-      } else {
-        setSlides(defaultSlides);
-      }
-    } catch (error) {
-      console.error('Error fetching sliders:', error);
+      setSlides(data.sliders?.length > 0 ? data.sliders : defaultSlides);
+    } catch {
       setSlides(defaultSlides);
     } finally {
       setLoading(false);
@@ -57,106 +51,138 @@ const HeroSlider = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    fetchSliders();
-  }, [fetchSliders]);
+  useEffect(() => { fetchSliders(); }, [fetchSliders]);
 
   useEffect(() => {
     if (slides.length > 0) {
-      const timer = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % slides.length);
-      }, 5000);
+      const timer = setInterval(() => setCurrentSlide((prev) => (prev + 1) % slides.length), 5500);
       return () => clearInterval(timer);
     }
   }, [slides.length]);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   if (loading) {
     return (
-      <div className="relative h-[500px] md:h-[600px] overflow-hidden bg-gradient-to-r from-[#5A0F1B]/5 to-white flex items-center justify-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-[#5A0F1B]"></div>
+      <div className="relative h-[480px] md:h-[580px] overflow-hidden bg-gradient-to-br from-[#FFF2F5] to-[#FDE8EE] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#B5617A]"></div>
       </div>
     );
   }
 
   return (
-    <div className="relative h-[500px] md:h-[600px] overflow-hidden bg-gradient-to-r from-[#5A0F1B]/5 to-white">
+    <div className="relative h-[480px] md:h-[580px] overflow-hidden">
       {slides.map((slide, index) => {
         const imageUrl = getSliderImage(slide);
-
         return (
           <div
             key={slide._id || slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentSlide ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
           >
+            {/* Background image */}
             <div
               className="absolute inset-0 bg-cover bg-center"
-              style={{
-                backgroundImage: `url(${imageUrl})`,
-                filter: 'brightness(0.7)'
-              }}
+              style={{ backgroundImage: `url(${imageUrl})`, filter: 'brightness(0.55)' }}
             />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
 
-          <div className="relative container mx-auto px-4 h-full flex items-center">
-            <div className="max-w-2xl text-white space-y-6 animate-fadeIn">
-              <p className="text-[#5A0F1B] font-semibold text-lg tracking-wider uppercase">
-                {slide.subtitle}
-              </p>
-              <h1 className="text-4xl md:text-6xl font-serif font-bold leading-tight">
-                {slide.title}
-              </h1>
-              <p className="text-xl text-gray-200">
-                {slide.description}
-              </p>
-              <Link
-                to={slide.link}
-                className="inline-block bg-gradient-to-r from-[#5A0F1B] to-[#7A1525] hover:from-[#7A1525] hover:to-[#8A1F35] text-white font-bold py-4 px-8 rounded-full transition transform hover:scale-105 shadow-xl"
-              >
-                {slide.cta}
-              </Link>
+            {/* Boutique gradient overlay — left side blush, right side darker */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#4A1F30]/80 via-[#7D3A52]/40 to-transparent" />
+
+            {/* Top decorative line */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#C5A55A] via-[#E8D5A0] to-[#C5A55A]"></div>
+
+            {/* Content */}
+            <div className="relative h-full flex items-center">
+              <div className="container mx-auto px-6 md:px-12">
+                <div className="max-w-xl animate-fadeIn">
+                  {/* Badge */}
+                  <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-[#E8D5A0]/40 rounded-full px-4 py-1.5 mb-5">
+                    <FaCrown className="text-[#E8D5A0] text-xs" />
+                    <span className="text-[#E8D5A0] text-xs font-semibold tracking-[0.15em] uppercase">
+                      {slide.subtitle}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold text-white leading-tight mb-4">
+                    {slide.title}
+                  </h1>
+
+                  {/* Gold divider */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-px bg-[#C5A55A]"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#C5A55A]"></div>
+                    <div className="w-10 h-px bg-[#C5A55A]"></div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-pink-100 text-sm md:text-base leading-relaxed mb-7 max-w-md">
+                    {slide.description}
+                  </p>
+
+                  {/* CTAs */}
+                  <div className="flex flex-wrap gap-3">
+                    <Link
+                      to={slide.link}
+                      className="inline-flex items-center gap-2 bg-gradient-to-r from-[#B5617A] to-[#7D3A52] hover:from-[#7D3A52] hover:to-[#4A1F30] text-white font-bold py-3.5 px-7 rounded-full transition-all shadow-xl hover:shadow-2xl hover:-translate-y-0.5 text-sm"
+                    >
+                      {slide.cta}
+                    </Link>
+                    <Link
+                      to="/categories"
+                      className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur-sm border border-white/40 text-white font-semibold py-3.5 px-7 rounded-full transition-all text-sm hover:-translate-y-0.5"
+                    >
+                      View Collections
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
         );
       })}
 
-      {/* Navigation Arrows */}
+      {/* Bottom decorative line */}
+      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#C5A55A]/60 to-transparent z-10"></div>
+
+      {/* Prev Arrow */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-4 rounded-full transition z-10"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 bg-white/15 hover:bg-[#B5617A] backdrop-blur-sm text-white rounded-full flex items-center justify-center transition-all duration-300 border border-white/20 hover:border-[#B5617A] hover:shadow-lg"
+        aria-label="Previous slide"
       >
-        <FaChevronLeft className="text-2xl" />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-4 rounded-full transition z-10"
-      >
-        <FaChevronRight className="text-2xl" />
+        <FaChevronLeft className="text-base" />
       </button>
 
-      {/* Dots Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
+      {/* Next Arrow */}
+      <button
+        onClick={nextSlide}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 bg-white/15 hover:bg-[#B5617A] backdrop-blur-sm text-white rounded-full flex items-center justify-center transition-all duration-300 border border-white/20 hover:border-[#B5617A] hover:shadow-lg"
+        aria-label="Next slide"
+      >
+        <FaChevronRight className="text-base" />
+      </button>
+
+      {/* Dot Indicators */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
+            className={`rounded-full transition-all duration-300 ${
               index === currentSlide
-                ? 'bg-[#5A0F1B] w-10'
-                : 'bg-white/50 hover:bg-white/75'
+                ? 'bg-[#C5A55A] w-8 h-2.5'
+                : 'bg-white/40 hover:bg-white/70 w-2.5 h-2.5'
             }`}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
+      </div>
+
+      {/* Slide counter */}
+      <div className="absolute top-5 right-6 z-10 text-white/60 text-xs font-medium tabular-nums">
+        {String(currentSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
       </div>
     </div>
   );

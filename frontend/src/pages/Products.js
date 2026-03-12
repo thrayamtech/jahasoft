@@ -288,11 +288,18 @@ const Products = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Premium Hero Banner */}
-      <div className="relative bg-gradient-to-r from-[#0c1a5c] via-[#1e3a8a] to-[#0c1a5c] py-8 md:py-12">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djEySDI0VjM0aDEyek0zNiAydjEySDI0VjJoMTJ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-20"></div>
+      <div className="relative bg-gradient-to-r from-[#4A1F30] via-[#7D3A52] to-[#4A1F30] py-10 md:py-14 overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <svg className="w-full h-full" viewBox="0 0 800 200" preserveAspectRatio="none">
+            <path d="M 0 100 Q 200 50, 400 100 T 800 100" stroke="white" strokeWidth="2" fill="none"/>
+            <circle cx="100" cy="80" r="30" stroke="white" strokeWidth="1" fill="none"/>
+            <circle cx="700" cy="120" r="50" stroke="white" strokeWidth="1" fill="none"/>
+          </svg>
+        </div>
         <div className="max-w-[1600px] mx-auto px-4 text-center relative z-10">
-          <h1 className="text-2xl md:text-3xl font-serif font-bold mb-1 text-white">Shop All Products</h1>
-          <p className="text-white/80 text-xs md:text-sm">Discover our exquisite collection</p>
+          <p className="text-[#E8D5A0] text-[10px] tracking-[0.3em] uppercase mb-2 font-medium">JJ Trendz Official</p>
+          <h1 className="text-2xl md:text-4xl font-serif font-bold text-white mb-2">Shop All Designs</h1>
+          <p className="text-pink-200 text-sm">Explore our curated boutique collection</p>
         </div>
       </div>
 
@@ -305,7 +312,7 @@ const Products = () => {
                 <h2 className="text-xs font-semibold text-gray-700 uppercase">Filters</h2>
                 <button
                   onClick={clearFilters}
-                  className="text-xs text-gray-500 hover:text-[#5A0F1B] font-medium flex items-center gap-1 transition-colors"
+                  className="text-xs text-gray-500 hover:text-[#B5617A] font-medium flex items-center gap-1 transition-colors"
                 >
                   <FaTimes className="text-xs" /> Clear
                 </button>
@@ -321,7 +328,7 @@ const Products = () => {
                         onClick={() => handleFilterChange('category', filters.category === cat._id ? '' : cat._id)}
                         className={`w-full text-left px-2 py-1.5 text-sm transition-colors ${
                           filters.category === cat._id
-                            ? 'text-[#5A0F1B] font-medium'
+                            ? 'text-[#B5617A] font-medium'
                             : 'text-gray-600 hover:text-gray-900'
                         }`}
                       >
@@ -342,7 +349,7 @@ const Products = () => {
                         step="500"
                         value={priceRange[1]}
                         onChange={(e) => handlePriceRangeChange(priceRange[0], parseInt(e.target.value))}
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5A0F1B]"
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#B5617A]"
                       />
                       <div className="flex justify-between text-xs text-gray-600 mt-2">
                         <span>₹0</span>
@@ -358,14 +365,14 @@ const Products = () => {
                         value={priceRange[0]}
                         onChange={(e) => handlePriceRangeChange(parseInt(e.target.value) || 0, priceRange[1])}
                         placeholder="Min"
-                        className="px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-[#5A0F1B]"
+                        className="px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-[#B5617A]"
                       />
                       <input
                         type="number"
                         value={priceRange[1]}
                         onChange={(e) => handlePriceRangeChange(priceRange[0], parseInt(e.target.value) || 50000)}
                         placeholder="Max"
-                        className="px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-[#5A0F1B]"
+                        className="px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-[#B5617A]"
                       />
                     </div>
                   </div>
@@ -380,7 +387,7 @@ const Products = () => {
                         onClick={() => handleFilterChange('fabric', filters.fabric === fabric ? '' : fabric)}
                         className={`w-full text-left px-2 py-1.5 text-sm transition-colors ${
                           filters.fabric === fabric
-                            ? 'text-[#5A0F1B] font-medium'
+                            ? 'text-[#B5617A] font-medium'
                             : 'text-gray-600 hover:text-gray-900'
                         }`}
                       >
@@ -398,7 +405,7 @@ const Products = () => {
                         type="checkbox"
                         checked={filters.inStock}
                         onChange={(e) => handleFilterChange('inStock', e.target.checked)}
-                        className="w-4 h-4 text-[#5A0F1B] border-gray-300 rounded focus:ring-[#5A0F1B]"
+                        className="w-4 h-4 text-[#B5617A] border-gray-300 rounded focus:ring-[#5A0F1B]"
                       />
                       <span className="ml-3 text-sm text-gray-700 group-hover:text-gray-900">In Stock</span>
                     </label>
@@ -407,7 +414,7 @@ const Products = () => {
                         type="checkbox"
                         checked={filters.featured}
                         onChange={(e) => handleFilterChange('featured', e.target.checked)}
-                        className="w-4 h-4 text-[#5A0F1B] border-gray-300 rounded focus:ring-[#5A0F1B]"
+                        className="w-4 h-4 text-[#B5617A] border-gray-300 rounded focus:ring-[#5A0F1B]"
                       />
                       <span className="ml-3 text-sm text-gray-700 group-hover:text-gray-900">Featured</span>
                     </label>
@@ -416,7 +423,7 @@ const Products = () => {
                         type="checkbox"
                         checked={filters.sale}
                         onChange={(e) => handleFilterChange('sale', e.target.checked)}
-                        className="w-4 h-4 text-[#5A0F1B] border-gray-300 rounded focus:ring-[#5A0F1B]"
+                        className="w-4 h-4 text-[#B5617A] border-gray-300 rounded focus:ring-[#5A0F1B]"
                       />
                       <span className="ml-3 text-sm text-gray-700 group-hover:text-gray-900">On Sale</span>
                     </label>
@@ -434,7 +441,7 @@ const Products = () => {
                 {/* Desktop Filter Toggle Button */}
                 <button
                   onClick={() => setShowDesktopFilters(!showDesktopFilters)}
-                  className="hidden lg:flex items-center gap-2 px-4 py-2 text-[#5A0F1B] hover:text-[#7A1525] transition-colors text-sm font-medium"
+                  className="hidden lg:flex items-center gap-2 px-4 py-2 text-[#B5617A] hover:text-[#7D3A52] transition-colors text-sm font-medium"
                   title={showDesktopFilters ? "Hide Filters" : "Show Filters"}
                 >
                   <FaFilter className="text-xs" />
@@ -444,7 +451,7 @@ const Products = () => {
                 {/* Mobile Filter Button */}
                 <button
                   onClick={() => setShowMobileFilters(true)}
-                  className="lg:hidden flex items-center gap-2 px-4 py-2 text-[#5A0F1B] hover:text-[#7A1525] transition-colors text-sm font-medium"
+                  className="lg:hidden flex items-center gap-2 px-4 py-2 text-[#B5617A] hover:text-[#7D3A52] transition-colors text-sm font-medium"
                 >
                   <FaFilter className="text-xs" />
                   Filters
@@ -453,7 +460,7 @@ const Products = () => {
                 <div className="h-6 w-px bg-gray-300 hidden sm:block"></div>
 
                 <p className="text-sm text-gray-600">
-                  <span className="font-bold text-[#5A0F1B]">{totalProducts}</span> <span className="hidden sm:inline">products found</span>
+                  <span className="font-bold text-[#B5617A]">{totalProducts}</span> <span className="hidden sm:inline">products found</span>
                 </p>
               </div>
 
@@ -462,7 +469,7 @@ const Products = () => {
                 <div className="hidden md:flex items-center gap-2">
                   <button
                     onClick={() => setViewMode('grid-3')}
-                    className={`p-2 transition-colors ${viewMode === 'grid-3' ? 'text-[#5A0F1B]' : 'text-gray-400 hover:text-gray-600'}`}
+                    className={`p-2 transition-colors ${viewMode === 'grid-3' ? 'text-[#B5617A]' : 'text-gray-400 hover:text-gray-600'}`}
                     title="3 columns"
                   >
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -473,14 +480,14 @@ const Products = () => {
                   </button>
                   <button
                     onClick={() => setViewMode('grid-4')}
-                    className={`p-2 transition-colors ${viewMode === 'grid-4' ? 'text-[#5A0F1B]' : 'text-gray-400 hover:text-gray-600'}`}
+                    className={`p-2 transition-colors ${viewMode === 'grid-4' ? 'text-[#B5617A]' : 'text-gray-400 hover:text-gray-600'}`}
                     title="4 columns"
                   >
                     <FaThLarge />
                   </button>
                   <button
                     onClick={() => setViewMode('grid-5')}
-                    className={`p-2 transition-colors ${viewMode === 'grid-5' ? 'text-[#5A0F1B]' : 'text-gray-400 hover:text-gray-600'}`}
+                    className={`p-2 transition-colors ${viewMode === 'grid-5' ? 'text-[#B5617A]' : 'text-gray-400 hover:text-gray-600'}`}
                     title="5 columns"
                   >
                     <FaTh />
@@ -491,7 +498,7 @@ const Products = () => {
                 <select
                   value={sortBy}
                   onChange={(e) => handleSortChange(e.target.value)}
-                  className="px-4 py-2 text-gray-700 focus:outline-none text-sm bg-transparent cursor-pointer hover:text-[#5A0F1B] transition-colors"
+                  className="px-4 py-2 text-gray-700 focus:outline-none text-sm bg-transparent cursor-pointer hover:text-[#B5617A] transition-colors"
                 >
                   <option value="default">Default sorting</option>
                   <option value="newest">Newest First</option>
@@ -508,33 +515,33 @@ const Products = () => {
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="text-xs text-gray-600 font-semibold uppercase tracking-wide">Active Filters:</span>
                   {filters.search && (
-                    <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#5A0F1B]/10 text-[#7A1525] rounded-full text-xs font-medium">
+                    <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F5D0D8] text-[#7D3A52] rounded-full text-xs font-medium">
                       Search: {filters.search}
-                      <button onClick={() => handleFilterChange('search', '')} className="hover:text-[#8A1F35]">
+                      <button onClick={() => handleFilterChange('search', '')} className="hover:text-[#7D3A52]">
                         <FaTimes className="text-[10px]" />
                       </button>
                     </span>
                   )}
                   {filters.category && (
-                    <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#5A0F1B]/10 text-[#7A1525] rounded-full text-xs font-medium">
+                    <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F5D0D8] text-[#7D3A52] rounded-full text-xs font-medium">
                       {categories.find(c => c._id === filters.category)?.name}
-                      <button onClick={() => handleFilterChange('category', '')} className="hover:text-[#8A1F35]">
+                      <button onClick={() => handleFilterChange('category', '')} className="hover:text-[#7D3A52]">
                         <FaTimes className="text-[10px]" />
                       </button>
                     </span>
                   )}
                   {filters.fabric && (
-                    <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#5A0F1B]/10 text-[#7A1525] rounded-full text-xs font-medium">
+                    <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F5D0D8] text-[#7D3A52] rounded-full text-xs font-medium">
                       {filters.fabric}
-                      <button onClick={() => handleFilterChange('fabric', '')} className="hover:text-[#8A1F35]">
+                      <button onClick={() => handleFilterChange('fabric', '')} className="hover:text-[#7D3A52]">
                         <FaTimes className="text-[10px]" />
                       </button>
                     </span>
                   )}
                   {(filters.minPrice || filters.maxPrice) && (
-                    <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#5A0F1B]/10 text-[#7A1525] rounded-full text-xs font-medium">
+                    <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F5D0D8] text-[#7D3A52] rounded-full text-xs font-medium">
                       ₹{filters.minPrice || '0'} - ₹{filters.maxPrice || '50,000'}
-                      <button onClick={() => handlePriceRangeChange(0, 50000)} className="hover:text-[#8A1F35]">
+                      <button onClick={() => handlePriceRangeChange(0, 50000)} className="hover:text-[#7D3A52]">
                         <FaTimes className="text-[10px]" />
                       </button>
                     </span>
@@ -568,7 +575,7 @@ const Products = () => {
                     <button
                       onClick={() => handlePageChange(currentPage - 1)}
                       disabled={currentPage === 1}
-                      className="px-4 py-2 text-gray-600 hover:text-[#5A0F1B] disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium transition-colors"
+                      className="px-4 py-2 text-gray-600 hover:text-[#B5617A] disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium transition-colors"
                     >
                       Previous
                     </button>
@@ -590,7 +597,7 @@ const Products = () => {
                           onClick={() => handlePageChange(pageNum)}
                           className={`px-4 py-2 text-sm font-medium transition-colors ${
                             currentPage === pageNum
-                              ? 'text-[#5A0F1B]'
+                              ? 'text-[#B5617A]'
                               : 'text-gray-600 hover:text-gray-900'
                           }`}
                         >
@@ -601,7 +608,7 @@ const Products = () => {
                     <button
                       onClick={() => handlePageChange(currentPage + 1)}
                       disabled={currentPage === totalPages}
-                      className="px-4 py-2 text-gray-600 hover:text-[#5A0F1B] disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium transition-colors"
+                      className="px-4 py-2 text-gray-600 hover:text-[#B5617A] disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium transition-colors"
                     >
                       Next
                     </button>
@@ -615,7 +622,7 @@ const Products = () => {
                 <p className="text-sm text-gray-600 mb-4">Try adjusting your filters or search criteria</p>
                 <button
                   onClick={clearFilters}
-                  className="px-8 py-3 text-[#5A0F1B] hover:text-[#7A1525] transition-colors font-medium underline"
+                  className="px-8 py-3 text-[#B5617A] hover:text-[#7D3A52] transition-colors font-medium underline"
                 >
                   Clear All Filters
                 </button>
@@ -658,7 +665,7 @@ const Products = () => {
                         onClick={() => handleFilterChange('category', filters.category === cat._id ? '' : cat._id)}
                         className={`w-full text-left px-2 py-1.5 text-sm ${
                           filters.category === cat._id
-                            ? 'text-[#5A0F1B] font-medium'
+                            ? 'text-[#B5617A] font-medium'
                             : 'text-gray-600 hover:text-gray-900'
                         }`}
                       >
@@ -678,7 +685,7 @@ const Products = () => {
                     step="500"
                     value={priceRange[1]}
                     onChange={(e) => handlePriceRangeChange(priceRange[0], parseInt(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5A0F1B]"
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#B5617A]"
                   />
                   <div className="text-center text-sm font-medium text-gray-700 bg-gray-50 py-2 rounded mt-3">
                     ₹{priceRange[0].toLocaleString()} — ₹{priceRange[1].toLocaleString()}
@@ -695,7 +702,7 @@ const Products = () => {
                         onClick={() => handleFilterChange('fabric', filters.fabric === fabric ? '' : fabric)}
                         className={`w-full text-left px-2 py-1.5 text-sm ${
                           filters.fabric === fabric
-                            ? 'text-[#5A0F1B] font-medium'
+                            ? 'text-[#B5617A] font-medium'
                             : 'text-gray-600 hover:text-gray-900'
                         }`}
                       >
@@ -715,7 +722,7 @@ const Products = () => {
                 </button>
                 <button
                   onClick={() => setShowMobileFilters(false)}
-                  className="flex-1 px-4 py-3 text-[#5A0F1B] hover:text-[#7A1525] font-medium text-sm"
+                  className="flex-1 px-4 py-3 text-[#B5617A] hover:text-[#7D3A52] font-medium text-sm"
                 >
                   Apply Filters
                 </button>
