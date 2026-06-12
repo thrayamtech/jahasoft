@@ -5,7 +5,8 @@ const {
   getUsers,
   updateUserRole,
   toggleUserStatus,
-  deleteUser
+  deleteUser,
+  createStaffUser
 } = require('../controllers/adminController');
 const {
   getCoupons,
@@ -24,6 +25,7 @@ const upload = require('../middleware/upload');
 
 router.get('/stats', protect, authorize('admin'), getDashboardStats);
 router.get('/users', protect, authorize('admin'), getUsers);
+router.post('/staff', protect, authorize('admin'), createStaffUser);
 router.put('/users/:id/role', protect, authorize('admin'), updateUserRole);
 router.put('/users/:id/toggle-active', protect, authorize('admin'), toggleUserStatus);
 router.delete('/users/:id', protect, authorize('admin'), deleteUser);

@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import CartSidebar from './components/CartSidebar';
 import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute';
+import BillingRoute from './components/BillingRoute';
 
 // Pages
 import Home from './pages/Home';
@@ -283,69 +284,69 @@ function AppContent() {
                 </AdminRoute>
               }
             />
-            {/* Billing Module Routes */}
+            {/* Billing Module Routes — accessible by admin and staff */}
             <Route
               path="/billing"
               element={
-                <AdminRoute>
+                <BillingRoute>
                   <BillingDashboard />
-                </AdminRoute>
+                </BillingRoute>
               }
             />
             <Route
               path="/billing/suppliers"
               element={
-                <AdminRoute>
+                <BillingRoute>
                   <Suppliers />
-                </AdminRoute>
+                </BillingRoute>
               }
             />
             <Route
               path="/billing/raw-materials"
               element={
-                <AdminRoute>
+                <BillingRoute>
                   <RawMaterials />
-                </AdminRoute>
+                </BillingRoute>
               }
             />
             <Route
               path="/billing/purchase"
               element={
-                <AdminRoute>
+                <BillingRoute>
                   <Purchase />
-                </AdminRoute>
+                </BillingRoute>
               }
             />
             <Route
               path="/billing/production"
               element={
-                <AdminRoute>
+                <BillingRoute>
                   <Production />
-                </AdminRoute>
+                </BillingRoute>
               }
             />
             <Route
               path="/billing/sales"
               element={
-                <AdminRoute>
+                <BillingRoute>
                   <SalesInvoices />
-                </AdminRoute>
+                </BillingRoute>
               }
             />
             <Route
               path="/billing/vouchers"
               element={
-                <AdminRoute>
+                <BillingRoute>
                   <Vouchers />
-                </AdminRoute>
+                </BillingRoute>
               }
             />
             <Route
               path="/billing/reports"
               element={
-                <AdminRoute>
+                <BillingRoute>
                   <BillingReports />
-                </AdminRoute>
+                </BillingRoute>
               }
             />
           </Routes>

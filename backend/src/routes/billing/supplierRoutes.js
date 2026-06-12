@@ -10,11 +10,11 @@ const {
 } = require('../../controllers/billing/supplierController');
 const { protect, authorize } = require('../../middleware/auth');
 
-router.get('/', protect, authorize('admin'), getSuppliers);
-router.get('/:id', protect, authorize('admin'), getSupplier);
-router.get('/:id/ledger', protect, authorize('admin'), getSupplierLedger);
-router.post('/', protect, authorize('admin'), createSupplier);
-router.put('/:id', protect, authorize('admin'), updateSupplier);
+router.get('/', protect, authorize('admin', 'staff'), getSuppliers);
+router.get('/:id', protect, authorize('admin', 'staff'), getSupplier);
+router.get('/:id/ledger', protect, authorize('admin', 'staff'), getSupplierLedger);
+router.post('/', protect, authorize('admin', 'staff'), createSupplier);
+router.put('/:id', protect, authorize('admin', 'staff'), updateSupplier);
 router.delete('/:id', protect, authorize('admin'), deleteSupplier);
 
 module.exports = router;

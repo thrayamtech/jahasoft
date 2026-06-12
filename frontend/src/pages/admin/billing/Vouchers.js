@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { FaPlus, FaSearch, FaEye, FaTimes, FaMoneyBillWave, FaReceipt, FaFileAlt, FaWallet } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaEye, FaTimes, FaMoneyBillWave, FaReceipt, FaFileAlt, FaWallet, FaLock } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import AdminLayout from '../../../components/AdminLayout';
 import API from '../../../utils/api';
+import { useAuth } from '../../../context/AuthContext';
 
 const Vouchers = () => {
+  const { isStaff } = useAuth();
   const [vouchers, setVouchers] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -136,26 +138,32 @@ const Vouchers = () => {
             <h2 className="text-2xl font-bold text-gray-800">Vouchers</h2>
             <p className="text-gray-600 mt-1">Manage payment, receipt and expense vouchers</p>
           </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => openModal('Payment')}
-              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-            >
-              <FaMoneyBillWave /> Payment
-            </button>
-            <button
-              onClick={() => openModal('Receipt')}
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
-            >
-              <FaReceipt /> Receipt
-            </button>
-            <button
-              onClick={() => openModal('Expense')}
-              className="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition"
-            >
-              <FaWallet /> Expense
-            </button>
-          </div>
+          {isStaff ? (
+            <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-500 rounded-lg text-sm">
+              <FaLock /> View only — contact admin to create vouchers
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <button
+                onClick={() => openModal('Payment')}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+              >
+                <FaMoneyBillWave /> Payment
+              </button>
+              <button
+                onClick={() => openModal('Receipt')}
+                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+              >
+                <FaReceipt /> Receipt
+              </button>
+              <button
+                onClick={() => openModal('Expense')}
+                className="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition"
+              >
+                <FaWallet /> Expense
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Filters */}
@@ -256,8 +264,8 @@ const Vouchers = () => {
         )}
       </div>
 
-      {/* Modal */}
-      {showModal && (
+      {/* Modal — admin only */}
+      {showModal && !isStaff && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg max-w-lg w-full">
             <div className="p-6 border-b border-gray-200 flex items-center justify-between">

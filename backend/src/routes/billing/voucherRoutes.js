@@ -13,9 +13,10 @@ const {
 } = require('../../controllers/billing/voucherController');
 const { protect, authorize } = require('../../middleware/auth');
 
-router.get('/', protect, authorize('admin'), getVouchers);
-router.get('/expense-summary', protect, authorize('admin'), getExpenseSummary);
-router.get('/:id', protect, authorize('admin'), getVoucher);
+// Staff can view vouchers; only admin can create, edit, or delete them
+router.get('/', protect, authorize('admin', 'staff'), getVouchers);
+router.get('/expense-summary', protect, authorize('admin', 'staff'), getExpenseSummary);
+router.get('/:id', protect, authorize('admin', 'staff'), getVoucher);
 router.post('/payment', protect, authorize('admin'), createPaymentVoucher);
 router.post('/receipt', protect, authorize('admin'), createReceiptVoucher);
 router.post('/journal', protect, authorize('admin'), createJournalVoucher);

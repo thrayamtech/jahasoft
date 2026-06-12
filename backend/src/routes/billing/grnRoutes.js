@@ -9,10 +9,10 @@ const {
 } = require('../../controllers/billing/grnController');
 const { protect, authorize } = require('../../middleware/auth');
 
-router.get('/', protect, authorize('admin'), getGRNs);
-router.get('/:id', protect, authorize('admin'), getGRN);
-router.post('/', protect, authorize('admin'), createGRN);
-router.put('/:id/confirm', protect, authorize('admin'), confirmGRN);
+router.get('/', protect, authorize('admin', 'staff'), getGRNs);
+router.get('/:id', protect, authorize('admin', 'staff'), getGRN);
+router.post('/', protect, authorize('admin', 'staff'), createGRN);
+router.put('/:id/confirm', protect, authorize('admin', 'staff'), confirmGRN);
 router.delete('/:id', protect, authorize('admin'), deleteGRN);
 
 module.exports = router;

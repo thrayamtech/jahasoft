@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const AdminRoute = ({ children }) => {
+const BillingRoute = ({ children }) => {
   const { isAuthenticated, isAdmin, isStaff, loading } = useAuth();
 
   if (loading) {
@@ -14,14 +14,9 @@ const AdminRoute = ({ children }) => {
   }
 
   if (!isAuthenticated) return <Navigate to="/admin-login" />;
-
-  // Staff have access only to billing — redirect them away from all other admin pages
-  if (!isAdmin) {
-    if (isStaff) return <Navigate to="/admin/billing" />;
-    return <Navigate to="/" />;
-  }
+  if (!isAdmin && !isStaff) return <Navigate to="/" />;
 
   return children;
 };
 
-export default AdminRoute;
+export default BillingRoute;

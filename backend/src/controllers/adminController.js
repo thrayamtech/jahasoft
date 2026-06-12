@@ -199,7 +199,6 @@ exports.deleteUser = async (req, res) => {
       });
     }
 
-    // Don't allow deleting admin users
     if (user.role === 'admin') {
       return res.status(400).json({
         success: false,
@@ -212,6 +211,57 @@ exports.deleteUser = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'User deleted successfully'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// @desc    Create a staff user
+// @route   POST /api/admin/staff
+// @access  Private/Admin
+exports.createStaffUser = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Name, email, and password are required'
+      });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 6 characters'
+      });
+    }
+
+    const existing = await User.findOne({ email: email.toLowerCase() });
+    if (existing) {
+      return res.status(400).json({
+        success: false,
+        message: 'A user with this email already exists'
+      });
+    }
+
+    const user = await User.create({ name, email, password, role: 'staff' });
+
+    res.status(201).json({
+      success: true,
+      message: 'Staff user created successfully',
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        isActive: user.isActive,
+        createdAt: user.createdAt
+      }
     });
   } catch (error) {
     res.status(500).json({

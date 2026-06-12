@@ -24,8 +24,11 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await login(formData.email, formData.password);
-      navigate('/');
+      const result = await login(formData.email, formData.password);
+      const role = result?.user?.role;
+      if (role === 'admin') navigate('/admin');
+      else if (role === 'staff') navigate('/admin/billing');
+      else navigate('/');
     } catch (error) {
       console.error('Login error:', error);
     } finally {

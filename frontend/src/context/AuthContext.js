@@ -129,7 +129,8 @@ export const AuthProvider = ({ children }) => {
     updateUser,
     setAuthData,
     isAuthenticated: !!token,
-    isAdmin: user?.role === 'admin'
+    isAdmin: user?.role === 'admin',
+    isStaff: user?.role === 'staff'
   };
 
   return (

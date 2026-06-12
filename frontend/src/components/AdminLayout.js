@@ -5,10 +5,12 @@ import { useAuth } from '../context/AuthContext';
 
 const AdminLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [billingExpanded, setBillingExpanded] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { logout, user } = useAuth();
+  const { logout, user, isStaff } = useAuth();
+
+  // Staff land directly in billing — keep submenu expanded by default for them
+  const [billingExpanded, setBillingExpanded] = useState(isStaff);
 
   const handleLogout = () => { logout(); navigate('/login'); };
 
@@ -66,7 +68,8 @@ const AdminLayout = ({ children }) => {
         {/* Navigation */}
         <nav className="flex-1 p-4 overflow-y-auto">
           <ul className="space-y-1">
-            {menuItems.map((item) => (
+            {/* Main menu items hidden from staff */}
+            {!isStaff && menuItems.map((item) => (
               <li key={item.path}>
                 <Link
                   to={item.path}
@@ -131,6 +134,11 @@ const AdminLayout = ({ children }) => {
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-sm truncate text-white">{user?.name}</p>
                 <p className="text-xs text-pink-200 truncate">{user?.email}</p>
+                <span className={`text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded mt-0.5 inline-block ${
+                  isStaff ? 'bg-amber-400/30 text-amber-200' : 'bg-white/20 text-white'
+                }`}>
+                  {user?.role}
+                </span>
               </div>
             )}
           </div>
@@ -151,7 +159,9 @@ const AdminLayout = ({ children }) => {
               <h2 className="text-xl font-serif font-bold text-[#7D3A52]">
                 {menuItems.find(item => isActive(item.path, item.exact))?.label || 'Admin'}
               </h2>
-              <p className="text-xs text-gray-500 mt-0.5">JJ Trendz Official Boutique — Admin Panel</p>
+              <p className="text-xs text-gray-500 mt-0.5">
+                JJ Trendz Official Boutique — {isStaff ? 'Staff Billing Panel' : 'Admin Panel'}
+              </p>
             </div>
             <Link to="/" target="_blank"
               className="px-4 py-2 bg-gradient-to-r from-[#B5617A] to-[#7D3A52] text-white rounded-lg hover:opacity-90 transition-all text-sm font-medium shadow-md">

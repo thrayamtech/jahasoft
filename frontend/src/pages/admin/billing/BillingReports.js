@@ -3,8 +3,10 @@ import { FaChartBar, FaBoxes, FaFileInvoiceDollar, FaPercentage, FaDownload, FaS
 import { toast } from 'react-toastify';
 import AdminLayout from '../../../components/AdminLayout';
 import API from '../../../utils/api';
+import { useAuth } from '../../../context/AuthContext';
 
 const BillingReports = () => {
+  const { isStaff } = useAuth();
   const [activeReport, setActiveReport] = useState('stock');
   const [loading, setLoading] = useState(false);
   const [reportData, setReportData] = useState(null);
@@ -17,13 +19,15 @@ const BillingReports = () => {
     year: new Date().getFullYear()
   });
 
-  const reports = [
-    { id: 'stock', label: 'Stock Report', icon: FaBoxes },
-    { id: 'purchase', label: 'Purchase Register', icon: FaFileInvoiceDollar },
-    { id: 'sales', label: 'Sales Register', icon: FaFileInvoiceDollar },
-    { id: 'gst', label: 'GST Summary', icon: FaPercentage },
-    { id: 'profitloss', label: 'Profit & Loss', icon: FaChartBar }
+  // GST and financial reports are restricted to admin only
+  const allReports = [
+    { id: 'stock',      label: 'Stock Report',      icon: FaBoxes,            staffAllowed: true },
+    { id: 'purchase',   label: 'Purchase Register',  icon: FaFileInvoiceDollar, staffAllowed: true },
+    { id: 'sales',      label: 'Sales Register',     icon: FaFileInvoiceDollar, staffAllowed: true },
+    { id: 'gst',        label: 'GST Summary',        icon: FaPercentage,        staffAllowed: false },
+    { id: 'profitloss', label: 'Profit & Loss',      icon: FaChartBar,          staffAllowed: false },
   ];
+  const reports = isStaff ? allReports.filter(r => r.staffAllowed) : allReports;
 
   const fetchReport = async () => {
     setLoading(true);
